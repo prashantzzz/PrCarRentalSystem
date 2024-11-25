@@ -1,0 +1,75 @@
+﻿Project folder structure
+Certainly, here is the folder structure extracted from the image you provided:
+
+PrCarRentalSystem
+* Properties
+* Controllers
+    * CarController.cs
+    * UserController.cs
+* Data
+    * CarConfiguration.cs
+    * UserConfiguration.cs
+    * ApplicationDbContext.cs
+* Filters
+    * ValidationFilter.cs
+* Interfaces
+    * ICarRentalService.cs
+    * ICarRepository.cs
+    * IUserRepository.cs
+    * IUserService.cs
+* Middleware
+    * JwtMiddleware.cs
+* Models
+    * Car.cs
+    * User.cs
+* Repositories
+    * CarRepository.cs
+    * UserRepository.cs
+* Services
+    * CarRentalService.cs
+    * EmailService.cs
+    * JWTServices.cs
+    * UserService.cs
+* Shared
+    * AuthorizationConstants.cs
+* appsettings.json
+* PrCarRentalSystem.http
+* Program.cs
+
+An ASP.NET Core Web API project using Entity Framework structure with the following key components:
+
+* Controllers: Contains classes responsible for handling HTTP requests and returning responses.
+* Data: Contains classes related to data access, including database configurations and context.
+* Filters: Contains custom filters to apply logic before or after action methods.
+* Interfaces: Contains interfaces defining contracts for services and repositories.
+* Middleware: Contains middleware components to intercept and process HTTP requests and responses.
+* Models: Contains classes representing the domain entities (Car and User).
+* Repositories: Contains classes implementing the repository pattern for data access.
+* Services: Contains classes responsible for business logic.
+* Shared: Contains shared resources like constants and configuration settings.
+* appsettings.json: Contains application configuration settings:
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=DESKTOP-LAI8BHP\\SQLEXPRESS;Database=rentaldb;Trusted_Connection=True;TrustServerCertificate=True;"
+  },
+  "Jwt": {
+    "Key": "qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM",
+    "Issuer": "Issuer",
+    "Audience": "Audience"
+  },
+* Program.cs: The application entry point.
+
+* CMD for database updation
+dotnet clean
+dotnet build
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+
+* Sendgrid cred
+Recovery code: VBFG8YF2WFP1JWLGWHMF2UCS
+email: boizphotos13@gmail.com
+pswd: D3v!C@pT0r_2024$
+
+mailersend cred
+API Token: PrCarRentalAPI: mlsn.e4344c6956841036d75157dbb56c98e5d77922c4a62b77f0d5b24e12ed8116d6
+email: piru@gmail.com
+pswd: D3v!C@pT0r_2024$
