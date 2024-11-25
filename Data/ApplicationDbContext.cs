@@ -17,11 +17,16 @@ namespace PrCarRentalSystem.Data
         {
             modelBuilder.ApplyConfiguration(new CarConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.Entity<User>()
+                .HasKey(u => u.Id);
 
-            // Specify column type for the TotalPrice property
+            // Specify column type
             modelBuilder.Entity<Rental>()
                 .Property(r => r.TotalPrice)
                 .HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<User>()
+                .Property(u => u.Id)
+                .HasColumnName("Id");
 
         }
     }

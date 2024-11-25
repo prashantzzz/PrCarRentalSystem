@@ -72,9 +72,9 @@ namespace PrCarRentalSystem.Controllers
 
         [HttpPost("rent")]
         [Authorize]
-        public async Task<IActionResult> RentCar(int carId, DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> RentCar([FromQuery] int carId, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
-            var userId = int.Parse(User.FindFirst("UserId")?.Value);
+            var userId = int.Parse(User.FindFirst("Id")?.Value);
             var success = await _carRentalService.RentCarAsync(userId, carId, startDate, endDate);
 
             if (!success)

@@ -26,7 +26,7 @@ namespace PrCarRentalSystem.Services
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Role, user.Role),
-                new Claim("UserId", user.Id.ToString())
+                new Claim("Id", user.Id.ToString())
             };
 
             var token = new JwtSecurityToken(

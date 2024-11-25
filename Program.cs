@@ -65,11 +65,4 @@ app.UseMiddleware<JwtMiddleware>();
 
 app.MapControllers();
 
-//// for auto migrations
-//using (var scope = app.Services.CreateScope())
-//{
-//    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-//    context.Database.Migrate();
-//}
-
 app.Run();

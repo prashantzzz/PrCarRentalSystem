@@ -59,7 +59,7 @@ namespace PrCarRentalSystem.Controllers
         [Authorize]
         public async Task<ActionResult<IEnumerable<Rental>>> GetUserRentals()
         {
-            var userId = int.Parse(User.FindFirst("UserId")?.Value);
+            var userId = int.Parse(User.FindFirst("Id")?.Value);
             var rentals = await _carRentalService.GetUserRentalsAsync(userId);
             return Ok(rentals);
         }
