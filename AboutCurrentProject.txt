@@ -64,12 +64,6 @@ dotnet build
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 
-* Sendgrid cred
-Recovery code: VBFG8YF2WFP1JWLGWHMF2UCS
-email: boizphotos13@gmail.com
-pswd: D3v!C@pT0r_2024$
-
-mailersend cred
-API Token: PrCarRentalAPI: mlsn.e4344c6956841036d75157dbb56c98e5d77922c4a62b77f0d5b24e12ed8116d6
-email: piru@gmail.com
-pswd: D3v!C@pT0r_2024$
+* gsmtp
+Username: boizphotos13@gmail.com
+App Password: vxfn zbyk ehjm qtdw
