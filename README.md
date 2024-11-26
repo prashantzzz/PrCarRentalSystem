@@ -15,14 +15,9 @@ Screenshots file is also there as PrCarRentalAssign.pdf
 
 ### Root Directory
 - **AboutCurrentProject.txt**: A text file with more information about the project.
-- **appsettings.Development.json**: Configuration settings for development environment.
 - **appsettings.json**: Configuration settings for production environment.
-- **C#_Assignment.pdf**: Assignment instructions.
-- **PrCarRentalSystem.csproj**: The project file.
-- **PrCarRentalSystem.sln**: The solution file.
 - **README.md**: This file.
 - **Program.cs**: The entry point for the application.
-- **PrCarRentalSystem.http**: HTTP requests used for testing the API endpoints.
 
 ### Folders
 - **Controllers**: Contains API controllers to handle user and car-related requests.
@@ -48,9 +43,6 @@ Screenshots file is also there as PrCarRentalAssign.pdf
 - **Models**: Contains models representing the data entities.
   - `Car.cs`, `Rental.cs`, `User.cs`: Entity classes for `Car`, `Rental`, and `User`.
 
-- **Properties**: Contains project properties and configuration.
-  - `launchSettings.json`: Settings for running the application.
-
 - **Repositories**: Contains implementation of data repositories.
   - `CarRepository.cs`, `UserRepository.cs`: Repositories for accessing car and user data.
 
@@ -59,8 +51,6 @@ Screenshots file is also there as PrCarRentalAssign.pdf
 
 - **Shared**: Contains shared constants and helpers.
   - `AuthorizationConstants.cs`: Contains authorization constants for JWT tokens.
-
-- **bin**: Build output folder, including app settings for the development environment.
 
 ## API Endpoints
 
