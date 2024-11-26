@@ -23,38 +23,84 @@ namespace PrCarRentalSystem.Services
 
         public async Task<bool> RentCarAsync(int userId, int carId, DateTime startDate, DateTime endDate)
         {
-            var car = await _carRepository.GetCarByIdAsync(carId);
-            if (car == null || !car.IsAvailable)
-                return false;
-
-            var isAvailable = await CheckCarAvailabilityAsync(carId, startDate, endDate);
-            if (!isAvailable)
-                return false;
-
-            var totalPrice = await CalculateRentalPriceAsync(carId, startDate, endDate);
-
-            var rental = new Rental
+            try
             {
-                UserId = userId,
-                CarId = carId,
-                StartDate = startDate,
-                EndDate = endDate,
-                TotalPrice = totalPrice
-            };
+                // Check if the car exists and is available
+                var car = await _carRepository.GetCarByIdAsync(carId);
+                if (car == null)
+                {
+                    Console.WriteLine($"Car with ID {carId} not found.");
+                    return false;
+                }
 
-            await _context.Rentals.AddAsync(rental);
-            await _carRepository.UpdateCarAvailabilityAsync(carId, false);
+                if (!car.IsAvailable)
+                {
+                    Console.WriteLine($"Car with ID {carId} is not available for rental.");
+                    return false;
+                }
 
-            var result = await _context.SaveChangesAsync() > 0;
+                // Check availability for the specified date range
+                var isAvailable = await CheckCarAvailabilityAsync(carId, startDate, endDate);
+                if (!isAvailable)
+                {
+                    Console.WriteLine($"Car with ID {carId} is already rented for the selected dates: {startDate} to {endDate}.");
+                    return false;
+                }
 
-            if (result)
-            {
+                // Calculate rental price
+                var totalPrice = await CalculateRentalPriceAsync(carId, startDate, endDate);
+
+                // Create and save the rental record
+                var rental = new Rental
+                {
+                    UserId = userId,
+                    CarId = carId,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    TotalPrice = totalPrice
+                };
+
+                await _context.Rentals.AddAsync(rental);
+                await _carRepository.UpdateCarAvailabilityAsync(carId, false);
+
+                var saveResult = await _context.SaveChangesAsync();
+
+                if (saveResult <= 0)
+                {
+                    //Console.WriteLine($"Failed to save rental record for car ID {carId} and user ID {userId}. Changes not persisted.");
+                    return false;
+                }
+
+                Console.WriteLine($"Successfully saved rental record for car ID {carId} and user ID {userId}. Rental ID: {rental.Id}");
+
+                // Send confirmation email
                 var user = await _context.Users.FindAsync(userId);
-                await _emailService.SendRentalConfirmationEmailAsync(user.Email, car, rental);
-            }
+                if (user != null)
+                {
+                    try
+                    {
+                        await _emailService.SendRentalConfirmationEmailAsync(user.Email, car, rental);
+                        Console.WriteLine($"Confirmation email sent to {user.Email}.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error sending confirmation email to user {user.Email}: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"User with ID {userId} not found for email notification.");
+                }
 
-            return result;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error in RentCarAsync: {ex.Message}");
+                return false;
+            }
         }
+
 
         public async Task<bool> CheckCarAvailabilityAsync(int carId, DateTime startDate, DateTime endDate)
         {

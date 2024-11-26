@@ -80,7 +80,7 @@ namespace PrCarRentalSystem.Controllers
             if (!success)
                 return BadRequest("Unable to rent the car");
 
-            return Ok();
+            return Ok("Car rented successfully for userId "+userId+ " to carId "+carId);
         }
     }
 }
