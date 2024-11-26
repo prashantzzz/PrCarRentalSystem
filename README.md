@@ -2,6 +2,7 @@
 
 ## Overview
 This project is a **Car Rental System** developed in **C#** using **ASP.NET Core**. The system allows users to register, log in, rent cars, and manage rental records. Admins can manage car listings, update car details, and handle rental requests.
+Screenshots file is also there as PrCarRentalAssign.pdf
 
 ## Features
 - User Registration & Login
@@ -64,6 +65,8 @@ This project is a **Car Rental System** developed in **C#** using **ASP.NET Core
 ## API Endpoints
 
 ### Car Endpoints
+![image](https://github.com/user-attachments/assets/3eef5062-5182-4495-9e77-b6bf40161483)
+
 - **GET /api/car**
   - Retrieve a list of all available cars.
   
