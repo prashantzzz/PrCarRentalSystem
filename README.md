@@ -1,93 +1,143 @@
-﻿### README.md
+﻿# Car Rental System - README
 
-# Car Rental Service with MailerSend Integration
-
-This project is a Car Rental Service system that integrates the MailerSend API to send email notifications (e.g., rental confirmations) to users.
-
----
+## Overview
+This project is a **Car Rental System** developed in **C#** using **ASP.NET Core**. The system allows users to register, log in, rent cars, and manage rental records. Admins can manage car listings, update car details, and handle rental requests.
 
 ## Features
-- **Car Rental Management:** Users can rent cars based on availability and specified dates.
-- **Email Notifications:** Automated email notifications using the MailerSend API.
-- **Clean Code Architecture:** Modular design for easy scalability and maintenance.
+- User Registration & Login
+- Car Management (CRUD operations)
+- Car Rental Booking
+- Email Notifications on Rental Confirmation
+- JWT-based Authentication & Authorization
 
----
+## Project Structure
 
-## Technologies Used
-- **Backend:** ASP.NET Core
-- **Email API:** [MailerSend](https://www.mailersend.com)
-- **Dependencies:** `HttpClient`, `Newtonsoft.Json`
+### Root Directory
+- **AboutCurrentProject.txt**: A text file with more information about the project.
+- **appsettings.Development.json**: Configuration settings for development environment.
+- **appsettings.json**: Configuration settings for production environment.
+- **C#_Assignment.pdf**: Assignment instructions.
+- **PrCarRentalSystem.csproj**: The project file.
+- **PrCarRentalSystem.sln**: The solution file.
+- **README.md**: This file.
+- **Program.cs**: The entry point for the application.
+- **PrCarRentalSystem.http**: HTTP requests used for testing the API endpoints.
 
----
+### Folders
+- **Controllers**: Contains API controllers to handle user and car-related requests.
+  - `CarController.cs`: Handles car-related operations.
+  - `UserController.cs`: Handles user-related operations.
 
-## Setup Guide
+- **Data**: Contains files related to database configuration and entity models.
+  - `ApplicationDbContext.cs`: The database context class.
+  - `CarConfiguration.cs`, `UserConfiguration.cs`: Entity configurations for `Car` and `User` models.
 
-### 1. Prerequisites
-- .NET 6 SDK installed
-- MailerSend account with an API token
+- **Filters**: Contains custom filters for request validation.
+  - `ValidationFilter.cs`: Validates input data.
 
----
+- **Interfaces**: Contains interfaces for services and repositories.
+  - `ICarRentalService.cs`, `ICarRepository.cs`, `IEmailService.cs`, `IJwtService.cs`, `IUserRepository.cs`, `IUserService.cs`: Service and repository interfaces.
 
-### 2. Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repo/car-rental-service.git
-   cd car-rental-service
-   ```
-2. Restore dependencies:
-   ```bash
-   dotnet restore
-   ```
+- **Middleware**: Contains middleware for JWT authentication.
+  - `JwtMiddleware.cs`: Middleware for handling JWT token authentication.
 
----
+- **Migrations**: Database migrations for setting up and updating the database schema.
+  - `20241125100159_InitialCreate.cs`: Initial database migration.
 
-### 3. Configuration
-1. **MailerSend API Token:** Replace the placeholder API token in `EmailService.cs`:
-   ```csharp
-   private readonly string _apiToken = "your-api-token";
-   ```
-2. **Sender Email:** Update the sender email address and name:
-   ```csharp
-   private readonly string _fromEmail = "info@yourdomain.com";
-   private readonly string _fromName = "Your Company Name";
-   ```
+- **Models**: Contains models representing the data entities.
+  - `Car.cs`, `Rental.cs`, `User.cs`: Entity classes for `Car`, `Rental`, and `User`.
 
----
+- **Properties**: Contains project properties and configuration.
+  - `launchSettings.json`: Settings for running the application.
 
-### 4. Running the Application
-1. Build the project:
-   ```bash
-   dotnet build
-   ```
-2. Run the project:
-   ```bash
-   dotnet run
-   ```
+- **Repositories**: Contains implementation of data repositories.
+  - `CarRepository.cs`, `UserRepository.cs`: Repositories for accessing car and user data.
 
----
+- **Services**: Contains business logic services.
+  - `CarRentalService.cs`, `EmailService.cs`, `JWTService.cs`, `UserService.cs`: Services for handling car rentals, email notifications, JWT token management, and user operations.
 
-## How It Works
-1. When a user rents a car, the system checks availability and calculates the total rental cost.
-2. Upon successful rental, an email is sent to the user via the MailerSend API with rental details.
+- **Shared**: Contains shared constants and helpers.
+  - `AuthorizationConstants.cs`: Contains authorization constants for JWT tokens.
 
----
+- **bin**: Build output folder, including app settings for the development environment.
 
-## Example Usage
-Here’s how you can trigger email sending:
-```csharp
-await _emailService.SendRentalConfirmationEmailAsync(
-    "recipient@example.com",
-    "Rental Confirmation",
-    "Your rental has been confirmed!",
-    "<b>Your rental has been confirmed!</b>"
-);
+## API Endpoints
+
+### Car Endpoints
+- **GET /api/car**
+  - Retrieve a list of all available cars.
+  
+- **POST /api/car**
+  - Add a new car to the system (Admin only).
+  
+- **GET /api/car/{id}**
+  - Retrieve details of a specific car by ID.
+  
+- **PUT /api/car/{id}**
+  - Update the details of an existing car (Admin only).
+  
+- **DELETE /api/car/{id}**
+  - Delete a car from the system (Admin only).
+  
+- **POST /api/car/rent**
+  - Rent a car (User authenticated with JWT).
+
+### User Endpoints
+- **POST /api/user/register**
+  - Register a new user.
+  
+- **POST /api/user/login**
+  - Login to the system and obtain a JWT token.
+  
+- **GET /api/user/{id}**
+  - Retrieve details of a specific user by ID.
+  
+- **GET /api/user/rentals**
+  - Retrieve a list of rentals made by the authenticated user.
+
+## Setup & Configuration
+
+### 1. **Clone the repository**:
+   Clone the repository to your local machine.
+
+### 2. **Database Setup**:
+   - The project uses **Entity Framework Core** for database management.
+   - Run migrations to create the database schema.
+   - Update `appsettings.json` with the correct connection string and email service credentials.
+
+### 3. **Email Configuration**:
+   - Email notifications are sent via SMTP. Make sure to update the email configuration in `appsettings.json` for Gmail or any other SMTP server you use.
+
+### 4. **JWT Authentication**:
+   - The system uses **JWT** for authenticating users. Ensure you have the correct signing keys and token expiration settings in `appsettings.json`.
+
+### 5. **Run the Project**:
+   - Open the project in Visual Studio or Visual Studio Code.
+   - Press **F5** to run the project locally.
+   - The API will be accessible via `https://localhost:{port}`.
+
+### 6. **Testing**:
+   - Use tools like **Postman** or **Swagger** to test the API endpoints.
+
+## Running Migrations
+Run the following commands to apply migrations to your database:
+```bash
+dotnet ef migrations add InitialCreate
+dotnet ef database update
 ```
 
----
+## Example Usage
 
-## License
-This project is licensed under the MIT License.
+1. **Register a User**:
+   - `POST /api/user/register` with `username`, `email`, `password`, etc.
+   
+2. **Login a User**:
+   - `POST /api/user/login` with `username` and `password` to get a JWT token.
 
----
+3. **Rent a Car**:
+   - `POST /api/car/rent` with a JWT token in the Authorization header, along with `carId`, `startDate`, and `endDate` parameters.
 
-Feel free to contribute and improve the system. Happy coding! 😊
+## Conclusion
+This project provides a simple but functional car rental system using **ASP.NET Core**. It implements essential features like user registration, car management, rental booking, and email notifications with **JWT authentication** for secure access.
+
+For further questions or issues, refer to the documentation or contact the project maintainers.

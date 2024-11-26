@@ -74,13 +74,43 @@ namespace PrCarRentalSystem.Controllers
         [Authorize]
         public async Task<IActionResult> RentCar([FromQuery] int carId, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
-            var userId = int.Parse(User.FindFirst("Id")?.Value);
-            var success = await _carRentalService.RentCarAsync(userId, carId, startDate, endDate);
+            try
+            {
+                var userId = int.Parse(User.FindFirst("Id")?.Value);
 
-            if (!success)
-                return BadRequest("Unable to rent the car");
+                // Validate input data
+                if (startDate >= endDate)
+                {
+                    var error = "Invalid rental period: Start date must be earlier than end date.";
+                    Console.WriteLine(error);
+                    return BadRequest(error);
+                }
 
-            return Ok("Car rented successfully for userId "+userId+ " to carId "+carId);
+                if (carId <= 0)
+                {
+                    var error = "Invalid carId: carId must be greater than 0.";
+                    Console.WriteLine(error);
+                    return BadRequest(error);
+                }
+
+                var success = await _carRentalService.RentCarAsync(userId, carId, startDate, endDate);
+
+                if (!success)
+                {
+                    var error = $"Unable to rent the car. UserId: {userId}, CarId: {carId}, StartDate: {startDate}, EndDate: {endDate}. Possible causes: Car unavailable, invalid data, or service error.";
+                    Console.WriteLine(error);
+                    return BadRequest(error);
+                }
+
+                return Ok($"Car rented successfully for userId {userId} to carId {carId}.");
+            }
+            catch (Exception ex)
+            {
+                var error = $"An unexpected error occurred while processing the rental. Details: {ex.Message}";
+                Console.WriteLine(error);
+                return StatusCode(500, error); // Internal Server Error
+            }
         }
+
     }
 }
