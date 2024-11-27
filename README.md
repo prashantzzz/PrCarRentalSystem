@@ -102,18 +102,14 @@ Screenshots file is also there as PrCarRentalAssign.pdf
    - Email notifications are sent via SMTP. Make sure to update the email configuration in `appsettings.json` for Gmail or any other SMTP server you use.
 
 ### 4. **JWT Authentication**:
-   - The system uses **JWT** for authenticating users. Ensure you have the correct signing keys and token expiration settings in `appsettings.json`.
+   - The system uses **JWT** for authenticating users and their role. The signing keys and token expiration settings are in `appsettings.json`.
 
 ### 5. **Run the Project**:
-   - Open the project in Visual Studio or Visual Studio Code.
-   - Press **F5** to run the project locally.
+   - Open the project in Visual Studio and hit the Http button.
    - The API will be accessible via `https://localhost:{port}`.
 
-### 6. **Testing**:
-   - Use tools like **Postman** or **Swagger** to test the API endpoints.
-
 ## Running Migrations
-Run the following commands to apply migrations to your database:
+Commands to apply migrations to the database:
 ```bash
 dotnet ef migrations add InitialCreate
 dotnet ef database update
@@ -133,4 +129,3 @@ dotnet ef database update
 ## Conclusion
 This project provides a simple but functional car rental system using **ASP.NET Core**. It implements essential features like user registration, car management, rental booking, and email notifications with **JWT authentication** for secure access.
 
-For further questions or issues, refer to the documentation or contact the project maintainers.
