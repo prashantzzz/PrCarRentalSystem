@@ -1,4 +1,4 @@
-﻿# Car Rental System - README
+﻿# Car Rental System by Prashant
 
 ## Overview
 This project is a **Car Rental System** developed in **C#** using **ASP.NET Core**. The system allows users to register, log in, rent cars, and manage rental records. Admins can manage car listings, update car details, and handle rental requests.
