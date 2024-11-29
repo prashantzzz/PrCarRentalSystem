@@ -1,8 +1,5 @@
 ﻿using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using PrCarRentalSystem.Interfaces;
 using PrCarRentalSystem.Models;
 
