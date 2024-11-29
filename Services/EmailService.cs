@@ -66,7 +66,7 @@ namespace PrCarRentalSystem.Services
 
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress(_fromEmail),
+                    From = new MailAddress(_fromEmail, "Car Rental System"), // Set the display name here
                     Subject = subject,
                     IsBodyHtml = true
                 };

@@ -47,6 +47,7 @@ namespace PrCarRentalSystem.Services
                     return false;
                 }
 
+                Console.WriteLine($"Car with ID {carId} is available for rental.");
                 // Calculate rental price
                 var totalPrice = await CalculateRentalPriceAsync(carId, startDate, endDate);
 
@@ -67,10 +68,14 @@ namespace PrCarRentalSystem.Services
 
                 if (saveResult <= 0)
                 {
-                    //Console.WriteLine($"Failed to save rental record for car ID {carId} and user ID {userId}. Changes not persisted.");
-                    return false;
+                    // Verify rental entry directly from the database
+                    var exists = await _context.Rentals.AnyAsync(r => r.Id == rental.Id);
+                    if (!exists)
+                    {
+                        Console.WriteLine($"Failed to save rental record for car ID {carId} and user ID {userId}. SaveChangesAsync result = {saveResult}.");
+                        return false;
+                    }
                 }
-
                 Console.WriteLine($"Successfully saved rental record for car ID {carId} and user ID {userId}. Rental ID: {rental.Id}");
 
                 // Send confirmation email
